@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Eduverse - Smart Campus Management System
 
-## Getting Started
+**Eduverse** is a robust, web-based educational platform designed to bridge the gap between school administration, teachers, students, and parents. Unlike traditional systems, it creates a holistic Learning Management System (LMS) environment to transform institutions into "Smart Campuses".
 
-First, run the development server:
+##  Technology Stack
+This project uses the **T3 Stack** architecture for type safety and performance.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+* **Frontend:** Next.js (React) with Server-Side Rendering (SSR).
+* **Language:** TypeScript for robust type safety.
+* **Database:** MongoDB (Relational Model implementation).
+* **ORM:** Prisma for intuitive database interactions.
+* **Styling:** Tailwind CSS for responsive UI design.
+* **Authentication:** NextAuth.js for secure role-based access control.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+##  Key Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 1. Student & Parent Portal
+* **Smart Registration:** Self-service signup where parents can link their profiles to students using a unique Student ID.
+* **Personalized Routine:** Students see their specific daily class schedule (Subject, Time, Room) upon logging in.
+* **Resource Access:** Download study materials (PDFs, Notes) uploaded by teachers.
+* **Academic Tracking:** Parents can view attendance history and exam results in real-time.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. Teacher Dashboard
+* **Digital Classroom:** Upload resources, create assignments, and track deadlines.
+* **Direct Communication:** Secure chat feature to communicate directly with parents regarding student progress.
+* **Grading System:** Mark daily attendance and upload quiz/exam marks.
 
-## Learn More
+### 3.  Admin Control
+* **User Management:** Exclusive rights to create accounts for Teachers to ensure security.
+* **Routine Management:** Create master schedules that are automatically pushed to student/teacher dashboards.
 
-To learn more about Next.js, take a look at the following resources:
+## Installation & Setup
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/ArmansHub/eduverse-lms.git](https://github.com/ArmansHub/eduverse-lms.git)
+    cd eduverse-lms
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-## Deploy on Vercel
+3.  **Set up Environment Variables:**
+    Create a `.env` file in the root directory and add your MongoDB URI and NextAuth secret.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4.  **Run the application:**
+    ```bash
+    npm run dev
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 👥 Contributors
+
+| Name | ID | Contribution |
+| :--- | :--- | :--- |
+| **Md Arman Hossain** | 2022-2-60-043 | Lead Developer (90%) |
+| **Siam Ahmed** | 2022-2-60-074 | Contributor (10%) |
+
+---
+*Developed for Software Engineering (CSE-412), East West University, Fall-2025.*
