@@ -1,0 +1,222 @@
+
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// --- Enums ---
+enum UserRole {
+  ADMIN
+  TEACHER
+  STUDENT
+  PARENT
+}
+
+enum LiveStatus {
+  PENDING
+  STARTED
+  COMPLETED
+  CANCELLED
+}
+
+// --- Models ---
+
+model User {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  email        String   @unique
+  password     String
+  role         UserRole @default(STUDENT)
+  
+  // Student Specific
+  studentId    String?
+  studentClass String?
+  
+  // Parent Specific (Self Relation)
+  childId      String?  @db.ObjectId 
+  parent       User?    @relation("ParentChild", fields: [childId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children     User[]   @relation("ParentChild")
+  
+  phone        String?
+  address      String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // --- Relations ---
+  
+  // Teacher Relations
+  teachingSubjects      TeacherSubject[] 
+  classSchedules        ClassSchedule[]
+  
+  // Teacher Assignments
+  assignments           Assignment[]     @relation("TeacherAssignments")
+  
+  // Announcement Relations
+  announcements         Announcement[]   @relation("AdminAnnouncements")
+  teacherAnnouncements  Announcement[]   @relation("TeacherAnnouncements")
+  
+  // Live Class Relations
+  liveRequestsAsTeacher LiveRequest[]    @relation("TeacherRequests")
+  liveRequestsAsAdmin   LiveRequest[]    @relation("AdminRequests")
+  
+  // Chat Relations
+  sentMessages          Message[]        @relation("SentMessages")
+  receivedMessages      Message[]        @relation("ReceivedMessages")
+  
+  // Student Data Relations
+  attendances           Attendance[]
+  grades                Grade[]
+}
+
+model Subject {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String   @unique
+  
+  // Relations
+  teachers  TeacherSubject[]
+  schedules ClassSchedule[]
+  resources Resource[]
+  grades    Grade[]
+  liveRequests LiveRequest[]
+  
+  // Assignment Relation
+  assignments Assignment[] 
+}
+
+model TeacherSubject {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  teacherId String @db.ObjectId
+  subjectId String @db.ObjectId
+
+  teacher   User    @relation(fields: [teacherId], references: [id])
+  subject   Subject @relation(fields: [subjectId], references: [id])
+}
+
+model ClassSchedule {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  dayOfWeek   String   
+  startTime   String  
+  endTime     String
+  className   String
+  roomNumber  String?
+  subjectId   String   @db.ObjectId
+  teacherId   String   @db.ObjectId
+
+  subject     Subject  @relation(fields: [subjectId], references: [id])
+  teacher     User     @relation(fields: [teacherId], references: [id])
+}
+
+model Announcement {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  content   String
+  
+  // Scalar fields 
+  adminId   String?  @db.ObjectId
+  teacherId String?  @db.ObjectId
+
+  // Relations
+  admin     User?    @relation("AdminAnnouncements", fields: [adminId], references: [id])
+  teacher   User?    @relation("TeacherAnnouncements", fields: [teacherId], references: [id])
+  
+  className String?  // Specific class er jonno
+  createdAt DateTime @default(now())
+}
+
+model Assignment {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String?
+  dueDate     DateTime
+  className   String   // e.g., "Class 9"
+  
+  // Relations
+  subjectId   String   @db.ObjectId
+  subject     Subject  @relation(fields: [subjectId], references: [id])
+  
+  teacherId   String   @db.ObjectId
+  teacher     User     @relation("TeacherAssignments", fields: [teacherId], references: [id])
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Resource {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  fileName    String?
+  fileUrl     String
+  className   String
+  
+  subjectId   String   @db.ObjectId
+  subject     Subject  @relation(fields: [subjectId], references: [id])
+  teacherId   String?  @db.ObjectId 
+  
+  createdAt   DateTime @default(now())
+}
+
+model Attendance {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  date      DateTime
+  status    String   // "PRESENT", "ABSENT", "LATE"
+  
+  studentId String   @db.ObjectId
+  student   User     @relation(fields: [studentId], references: [id])
+  
+  teacherId String?  @db.ObjectId 
+  
+  // Optional kora hoyeche jate null value thakle crash na kore
+  createdAt DateTime? @default(now())
+}
+
+model Grade {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  quizMarks  Float?
+  midMarks   Float?
+  finalMarks Float?
+  totalMarks Float?
+  
+  studentId  String   @db.ObjectId
+  subjectId  String   @db.ObjectId
+  
+  student    User     @relation(fields: [studentId], references: [id])
+  subject    Subject  @relation(fields: [subjectId], references: [id])
+  
+  updatedAt  DateTime? @updatedAt
+}
+
+model LiveRequest {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  title       String?
+  status      LiveStatus @default(PENDING)
+  meetingLink String?
+  className   String?
+  teacherId   String     @db.ObjectId
+  subjectId   String?    @db.ObjectId
+  
+  teacher     User       @relation("TeacherRequests", fields: [teacherId], references: [id])
+  subject     Subject?   @relation(fields: [subjectId], references: [id])
+  
+  approvedBy  String?    @db.ObjectId
+  admin       User?      @relation("AdminRequests", fields: [approvedBy], references: [id])
+  
+  createdAt   DateTime   @default(now())
+}
+
+model Message {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  text        String
+  senderId    String   @db.ObjectId
+  receiverId  String   @db.ObjectId
+  isRead      Boolean  @default(false) 
+  createdAt   DateTime @default(now())
+
+  sender      User     @relation("SentMessages", fields: [senderId], references: [id])
+  receiver    User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
+}
