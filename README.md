@@ -2,7 +2,42 @@
 
 **Eduverse** is a robust, web-based educational platform designed to bridge the gap between school administration, teachers, students, and parents. Unlike traditional systems, it creates a holistic Learning Management System (LMS) environment to transform institutions into "Smart Campuses".
 
-##  Technology Stack
+## Project Gallery
+
+### Home & Authentication
+| **Landing Page** | **Login Portal** |
+|:---:|:---:|
+| ![Home](./screenshots/Homepage.jpg) | ![Login](./screenshots/login.jpg) |
+| **Registration** | |
+| ![Register](./screenshots/registration.jpg) | |
+
+### Admin Dashboard
+| **Overview** | **User Management** |
+|:---:|:---:|
+| ![Admin Overview](./screenshots/admin-overview.jpg) | ![User Management](./screenshots/admin-userManagement.jpg) |
+| **Class Assign** | **Subject Management** |
+| ![Class Assign](./screenshots/admin-class_assign.jpg) | ![Add Subject](./screenshots/admin-addSubject.jpg) |
+
+### Teacher Portal
+| **Teacher Dashboard** | **Mark Entry** |
+|:---:|:---:|
+| ![Teacher Overview](./screenshots/teacher-overview.jpg) | ![Marks](./screenshots/teacher-markEntry.jpg) |
+| **Create Assignment** | **Chat with Parents** |
+| ![Assignment](./screenshots/teacher-createAssignment.jpg) | ![Chat](./screenshots/teacher-chatWithparents.jpg) |
+
+### 🎓 Student Portal
+| **Student Dashboard** | **Class Routine** |
+|:---:|:---:|
+| ![Student Overview](./screenshots/student-overview.jpg) | ![Routine](./screenshots/student-fullroutine.jpg) |
+| **Resources** | **Exam Results** |
+| ![Resources](./screenshots/student-resources.jpg) | ![Result](./screenshots/student-result.jpg) |
+
+### Parent Portal
+| **Parent Dashboard** | **Teacher Communication** |
+|:---:|:---:|
+| ![Parent Overview](./screenshots/parent-overview.jpg) | ![Parent Chat](./screenshots/parent-chatWithTeacher.jpg) |
+
+## Technology Stack
 This project uses the **T3 Stack** architecture for type safety and performance.
 
 * **Frontend:** Next.js (React) with Server-Side Rendering (SSR).
@@ -12,9 +47,9 @@ This project uses the **T3 Stack** architecture for type safety and performance.
 * **Styling:** Tailwind CSS for responsive UI design.
 * **Authentication:** NextAuth.js for secure role-based access control.
 
-##  Key Features
+## Key Features
 
-### 1. Student & Parent Portal
+### 1. 🎓 Student & Parent Portal
 * **Smart Registration:** Self-service signup where parents can link their profiles to students using a unique Student ID.
 * **Personalized Routine:** Students see their specific daily class schedule (Subject, Time, Room) upon logging in.
 * **Resource Access:** Download study materials (PDFs, Notes) uploaded by teachers.
@@ -25,7 +60,7 @@ This project uses the **T3 Stack** architecture for type safety and performance.
 * **Direct Communication:** Secure chat feature to communicate directly with parents regarding student progress.
 * **Grading System:** Mark daily attendance and upload quiz/exam marks.
 
-### 3.  Admin Control
+### 3. Admin Control
 * **User Management:** Exclusive rights to create accounts for Teachers to ensure security.
 * **Routine Management:** Create master schedules that are automatically pushed to student/teacher dashboards.
 
@@ -50,12 +85,11 @@ This project uses the **T3 Stack** architecture for type safety and performance.
     npm run dev
     ```
 
-## 👥 Contributors
+## 👨‍💻 Developer
 
-| Name | ID | Contribution |
+| Name | ID | Role |
 | :--- | :--- | :--- |
-| **Md Arman Hossain** | 2022-2-60-043 | Lead Developer (90%) |
-| **Siam Ahmed** | 2022-2-60-074 | Contributor (10%) |
+| **Md Arman Hossain** | 2022-2-60-043 | Lead Developer |
 
 ---
 *Developed for Software Engineering (CSE-412), East West University, Fall-2025.*
